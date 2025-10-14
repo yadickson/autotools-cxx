@@ -19,9 +19,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: update operating system
-      run: sudo apt update -y
+      run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt install -y build-essential libcpputest-dev lcov libncurses-dev cppcheck
+      run: sudo apt-get install -y build-essential libcpputest-dev lcov libncurses-dev cppcheck
     - name: autoreconf
       run: autoreconf -ivf
     - name: configure
