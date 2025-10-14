@@ -5,13 +5,9 @@ on: [push, pull_request]
 jobs:
 
   build:
-    runs-on: ubuntu-${{ matrix.version }}-${{ matrix.architecture }}
+    runs-on: ubuntu-latest-${{ matrix.architecture }}
     strategy:
       matrix:
-        version:
-          - 20.04
-          - 22.04
-          - latest
         architecture:
           - amd64
           - arm64
