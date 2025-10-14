@@ -5,12 +5,7 @@ on: [push, pull_request]
 jobs:
 
   build:
-    runs-on: ubuntu-latest-${{ matrix.architecture }}
-    strategy:
-      matrix:
-        architecture:
-          - amd64
-          - arm64
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
