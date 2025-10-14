@@ -1,1 +1,43 @@
+name: C/C++ CI Linux Debian
 
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version:
+          - buster
+          - bullseye
+          - bookworm
+          - trixie
+          - sid
+#        architecture:
+#          - i386
+#          - armhf
+#          - amd64
+#          - arm64
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: install dependencies
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "apt update -y"
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "apt install -y build-essential libcpputest-dev lcov libncurses-dev cppcheck"
+      - name: autoreconf
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "autoreconf -ivf"
+      - name: configure
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "./configure"
+      - name: make
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "make"
+      - name: make check
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "make check"
+      - name: make distcheck
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app debian:${{ matrix.version }} bash -c "make distcheck"

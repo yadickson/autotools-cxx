@@ -1,4 +1,4 @@
-name: C/C++ CI Linux
+name: C/C++ CI Linux Ubuntu
 
 on: [push, pull_request]
 
@@ -18,10 +18,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: install dependencies on [${{ matrix.os }}-${{ matrix.architecture }}]
-      run: |
-        sudo apt update
-        sudo apt install -y build-essential libcpputest-dev lcov libncurses-dev cppcheck
+    - name: update operating system
+      run: sudo apt update -y
+    - name: install dependencies
+      run: sudo apt install -y build-essential libcpputest-dev lcov libncurses-dev cppcheck
     - name: autoreconf
       run: autoreconf -ivf
     - name: configure
