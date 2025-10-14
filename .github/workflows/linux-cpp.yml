@@ -5,14 +5,20 @@ on: [push, pull_request]
 jobs:
 
   build:
+    runs-on: ubuntu-${{ matrix.version }}-${{ matrix.architecture }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+        version:
+          - 20.04
+          - 22.04
+          - latest
+        architecture:
+          - amd64
+          - arm64
 
     steps:
     - uses: actions/checkout@v4
-    - name: install dependencies on [${{ matrix.os }}]
+    - name: install dependencies on [${{ matrix.os }}-${{ matrix.architecture }}]
       run: |
         sudo apt update
         sudo apt install -y build-essential libcpputest-dev lcov libncurses-dev cppcheck
