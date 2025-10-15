@@ -20,9 +20,10 @@ jobs:
             gcc
             make
             autotools
-            cpputest
             lcov
-            cppcheck
+          pacboy: >-
+            cpputest:p
+            cppcheck:p
       - name: config git
         run: git config --global core.autocrlf input
       - name: checkout source code
