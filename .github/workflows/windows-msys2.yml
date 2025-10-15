@@ -17,21 +17,16 @@ jobs:
           update: true
           install: >-
             git
-            make
             gcc
+            make
+            autotools
+            cpputest
+            lcov
+            cppcheck
       - name: config git
         run: git config --global core.autocrlf input
       - name: checkout source code
         uses: actions/checkout@v4
-      - name: update operating system
-        run: pacman -Syu
-      - name: install dependencies
-        run: |
-          pacman -S autoconf
-          pacman -S automake
-          pacman -S cpputest
-          pacman -S lcov
-          pacman -S cppcheck
       - name: autoreconf
         run: autoreconf -ivf
       - name: configure

@@ -17,11 +17,12 @@ jobs:
           install-dir: C:\cygwin
           env: winsymlinks:native
           packages: >-
-            autoconf,
-            automake,
-            gcc-g++,
-            make,
-            cppcheck,
+            curl
+            autoconf
+            automake
+            gcc-g++
+            make
+            cppcheck
             libncurses-devel
       - name: config git
         run: git config --global core.autocrlf input
