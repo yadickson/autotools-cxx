@@ -1,0 +1,37 @@
+name: C/C++ CI Windows with CYGWIN
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash --login {0}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: egor-tensin/setup-cygwin@v4
+        with:
+          install-dir: C:\cygwin
+          env: winsymlinks:native
+          packages: >-
+            autoconf,
+            automake,
+            gcc-g++,
+            make,
+            cppcheck,
+            libncurses-devel
+      - name: autoreconf
+        run: autoreconf -ivf
+      - name: configure
+        run: ./configure
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make
+      - name: make check
+        run: make check
+      - name: make distcheck
+        run: make distcheck

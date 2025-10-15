@@ -1,0 +1,32 @@
+name: C/C++ CI MacOS
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: update operating system
+        run: brew update
+      - name: install dependencies
+        run: |
+          brew install autoconf
+          brew install automake
+          brew install cpputest
+          brew install lcov
+          brew install cppcheck
+      - name: autoreconf
+        run: autoreconf -ivf
+      - name: configure
+        run: ./configure
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make
+      - name: make check
+        run: make check
+      - name: make distcheck
+        run: make distcheck
