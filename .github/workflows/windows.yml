@@ -1,4 +1,4 @@
-name: C/C++ CI Windows with CYGWIN
+name: C/C++ CI Windows
 
 on: [push, pull_request]
 
@@ -8,29 +8,28 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash --noprofile --norc -eo pipefail -o igncr {0}
+        shell: msys2 {0}
 
     steps:
+      - name: config msys2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: git
+          pacboy: >-
+            autotools:p
+            gcc:p
+            make:p
+            lcov:p
+            ncurses
+            cpputest:p
+            cppcheck:p
       - name: config git
         run: git config --global core.autocrlf input
       - name: checkout source code
         uses: actions/checkout@v4
-      - name: config cywin
-        uses: egor-tensin/setup-cygwin@v4
-        with:
-          install-dir: C:\cygwin
-          env: winsymlinks:native
-          packages: >-
-            autoconf
-            automake
-            gcc-g++
-            make
-            cppcheck
-            libncurses-devel
       - name: autoreconf
         run: autoreconf -ivf
-      - name: configure
-        run: ./configure
       - name: configure
         run: ./configure
       - name: make
