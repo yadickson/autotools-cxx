@@ -11,14 +11,18 @@ jobs:
         shell: msys2 {0}
 
     steps:
-      - name: config git
-        run: git config --global core.autocrlf input
-      - name: checkout source code
-        uses: actions/checkout@v4
       - name: config msys2
         uses: msys2/setup-msys2@v2
         with:
           update: true
+          install: >-
+            git
+            make
+            gcc
+      - name: config git
+        run: git config --global core.autocrlf input
+      - name: checkout source code
+        uses: actions/checkout@v4
       - name: update operating system
         run: pacman -Syu
       - name: install dependencies

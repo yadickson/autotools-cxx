@@ -11,10 +11,6 @@ jobs:
         shell: bash --noprofile --norc -eo pipefail -o igncr {0}
 
     steps:
-      - name: config git
-        run: git config --global core.autocrlf input
-      - name: checkout source code
-        uses: actions/checkout@v4
       - name: config cywin
         uses: egor-tensin/setup-cygwin@v4
         with:
@@ -27,6 +23,10 @@ jobs:
             make,
             cppcheck,
             libncurses-devel
+      - name: config git
+        run: git config --global core.autocrlf input
+      - name: checkout source code
+        uses: actions/checkout@v4
       - name: autoreconf
         run: autoreconf -ivf
       - name: configure
