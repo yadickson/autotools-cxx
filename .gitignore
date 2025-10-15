@@ -56,3 +56,8 @@ Makefile
 
 .idea/
 
+COPYING
+INSTALL
+config.h
+*.in
+*~
