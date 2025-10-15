@@ -1,0 +1,48 @@
+name: C/C++ CI Windows with MinSYS2
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        sys:
+          - mingw32
+          - mingw64
+          - ucrt64
+          - clang64
+    steps:
+      - name: config git
+        run: git config --global core.autocrlf input
+      - name: checkout source code
+        uses: actions/checkout@v4
+      - name: config msys2 ${{ matrix.sys }}
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          update: true
+          install: >-
+            autoconf,
+            automake,
+            gcc-g++,
+            make,
+            cppcheck,
+            libncurses-devel
+          pacboy: >-
+            toolchain:p
+            cmake:p
+            ninja:p
+      - name: autoreconf
+        run: autoreconf -ivf
+      - name: configure
+        run: ./configure
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make
+      - name: make check
+        run: make check
+      - name: make distcheck
+        run: make distcheck
