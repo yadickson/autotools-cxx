@@ -21,7 +21,6 @@ jobs:
           install-dir: C:\cygwin
           env: winsymlinks:native
           packages: >-
-            curl
             autoconf
             automake
             gcc-g++

@@ -15,13 +15,13 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: >-
-            git
-            gcc
-            make
-            autotools
-            lcov
+          install: git
           pacboy: >-
+            autotools:p
+            gcc:p
+            make:p
+            lcov:p
+            ncurses
             cpputest:p
             cppcheck:p
       - name: config git
