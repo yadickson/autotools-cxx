@@ -8,11 +8,15 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash --login {0}
+        shell: bash --noprofile --norc -eo pipefail -o igncr {0}
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: egor-tensin/setup-cygwin@v4
+      - name: config git
+        run: git config --global core.autocrlf input
+      - name: checkout source code
+        uses: actions/checkout@v4
+      - name: config cywin
+        uses: egor-tensin/setup-cygwin@v4
         with:
           install-dir: C:\cygwin
           env: winsymlinks:native
